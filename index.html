@@ -7,14 +7,51 @@
 </style>
   <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
   <script src="js/player-component.js"></script>
+  <script src="js/chest-component.js"></script>
 </head>
 <body>
   <a-scene>
     <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
     <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
     <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-    <a-sky color="#ECECEC"></a-sky>
+
+    <a-plane id="ground" position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+    <a-sky id="sky" color="#ECECEC"></a-sky>
+
   </a-scene>
+<script>
+'use strict';
+
+var numChests = 6;
+
+function init() {
+  console.log('init');
+  var positions = [];
+  for (var i = 0; i < numChests; i++) {
+    positions.push( [Math.random() * 10 - 5, Math.random() * 10 - 5] );
+  }
+
+  console.log(positions);
+
+  for (var i = 0; i < numChests; i++) {
+    addChest(positions[i]);
+  }
+}
+
+function addChest(position) {
+  var scene = document.querySelector('a-scene');
+
+  var entity = document.createElement('a-entity');
+  entity.setAttribute('chest', '');
+
+  var chest = entity.components.chest;
+  chest.setPosition(position);
+  console.log(chest);
+
+  scene.appendChild(entity);
+}
+
+window.onload = init;
+</script>
 </body>
 </html>
